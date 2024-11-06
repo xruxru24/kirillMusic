@@ -1,26 +1,36 @@
+QWidget {
+    background-color: #202123; /* Базовый темный цвет */
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #202123, stop:1 #3A3B3C); /* Плавный градиент из темного в более светлый серый */
+}
 QPushButton {
-  text-decoration: none;
-  background-color: white;
-  border: none;
-  border-radius: 45px;
-  padding: 10px 20px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 3px;
-  font-weight: 600;
-  color: green;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
-  transition: .3s;
+    border-radius: 10px;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    background: #9ACD32; /* Натуральный салатовый цвет */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 QPushButton:hover {
-  background-color: #2EE59D;
-  box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
-  color: white;
+    background: #8FBC30; /* Чуть темнее при наведении */
+    box-shadow: 0 0 10px 2px #9ACD32, 0 0 10px 4px #8FBC30; /* Подсветка */
+    transform: scale(1.05); /* Небольшое увеличение */
+}
+
+QPushButton:pressed {
+    background-color: #7DA527; /* Темный оттенок при нажатии */
+    transform: scale(0.95); /* Легкое уменьшение при нажатии */
+    box-shadow: 0 0 5px 1px #7DA527; /* Уменьшенная тень */
 }
 QLabel {
-  color: green; 
-  text-align: centers;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #3A3B3C, stop:1 #202123); /* Темный градиент */
+    color: #E1E1E1; /* Светлый текст */
+    padding: 10px;
+    border-radius: 8px; /* Закругленные края */
+    border: 1px solid #444; /* Тонкая обводка */
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тень для объема */
+    text-align: center; /* Выравнивание текста */
 }

@@ -8,7 +8,7 @@ def except_hook(cls, exception, traceback):
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
+    app = QApplication([])
     sys.excepthook = except_hook
     main_window = Authorization()
     main_window.show()

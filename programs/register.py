@@ -6,15 +6,15 @@ import sqlite3
 class Register(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('register.ui', self)
-        # вернуть потом
+        uic.loadUi('../ui/register.ui', self)
+        self.back_button.clicked.connect(self.clicked_back_button)
         self.register_button.clicked.connect(self.clicked_register_button)
 
     def clicked_back_button(self):
         from authorization import Authorization
         self.hide()
-        style_auth_window = Authorization()
-        style_auth_window.show()
+        self.auth_show = Authorization()
+        self.auth_show.show()
         self.close()
 
     def clicked_register_button(self):
