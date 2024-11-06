@@ -1,0 +1,26 @@
+QPushButton {
+  text-decoration: none;
+  background-color: white;
+  border: none;
+  border-radius: 45px;
+  padding: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: green;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+
+QPushButton:hover {
+  background-color: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+  color: white;
+}
+QLabel {
+  color: green; 
+  text-align: centers;
+}
