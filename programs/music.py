@@ -1,8 +1,7 @@
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtCore import Qt, QUrl
-from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
+from PyQt6.QtCore import, QUrl
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 
 
@@ -12,18 +11,7 @@ class MusicPlayer(QMainWindow):
         uic.loadUi('../ui/player.ui', self)
         self.play_or_stop = True
         self.setWindowTitle("Музыкальный плеер")
-        self.player = QMediaPlayer()
-        self.audio_output = QAudioOutput()
-        self.player.setAudioOutput(self.audio_output)
-        self.file_name = None
-        self.audio_output.setVolume(.5)
-        self.player.play()
-        self.dialog_button.clicked.connect(self.clicked_dialog_button)
-        self.volume_slider.setValue(50)
-        self.volume_slider.setMaximum(100)
-        self.volume_slider.setToolTip("Volume")
-        self.volume_slider.valueChanged.connect(self.set_volume)
-        self.stop_play_button.clicked.connect(self.clicked_spot_play_button)
+
 
     def clicked_spot_play_button(self):
         if self.play_or_stop:
@@ -36,6 +24,7 @@ class MusicPlayer(QMainWindow):
     def clicked_dialog_button(self):
         self.file_name, _ = QFileDialog.getOpenFileName(self, "Открыть файл", "", "Аудио файлы (*.mp3 *.wav *.ogg)")
         self.player.setSource(QUrl.fromLocalFile(self.file_name))
+        self.player.play()
 
     def set_volume(self):
         self.volume = self.volume_slider.value()
