@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="accessibleDescription">
+   <string/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -29,7 +32,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>РЕГЕСТРАЦИЯ</string>
@@ -39,9 +42,9 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>210</y>
+      <y>190</y>
       <width>311</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -51,7 +54,7 @@
       <x>240</x>
       <y>270</y>
       <width>311</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -59,13 +62,13 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>190</y>
+      <y>170</y>
       <width>47</width>
       <height>13</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>ЛОГИН</string>
@@ -75,13 +78,13 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>250</y>
+      <y>240</y>
       <width>47</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>ПАРОЛЬ</string>
@@ -91,13 +94,13 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>310</y>
+      <y>320</y>
       <width>121</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>ПОВТОРИТЕ ПАРОЛЬ</string>
@@ -107,9 +110,9 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>340</y>
+      <y>350</y>
       <width>311</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -117,13 +120,13 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>400</y>
-      <width>201</width>
-      <height>41</height>
+      <y>440</y>
+      <width>261</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>ЗАРЕГЕСТРИРОВАТЬСЯ</string>
@@ -132,8 +135,8 @@
    <widget class="QLabel" name="error">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>380</y>
+      <x>230</x>
+      <y>400</y>
       <width>311</width>
       <height>21</height>
      </rect>
@@ -150,12 +153,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>81</width>
-      <height>31</height>
+      <width>151</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>НАЗАД</string>

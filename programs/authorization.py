@@ -15,6 +15,10 @@ class Authorization(QMainWindow):
         self.registor.clicked.connect(self.clicked_register)
         self.login_show = Login(self)
         self.register_show = Register(self)
+        self.show()
+
+        with open("../style/style_authorization.qss", "r") as f:
+            self.setStyleSheet(f.read())
 
     def closeEvent(self, event):
         self.closed.emit()

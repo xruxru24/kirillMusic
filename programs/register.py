@@ -11,6 +11,9 @@ class Register(QMainWindow):
         self.register_button.clicked.connect(self.clicked_register_button)
         self.auth_window = auth_window
 
+        with open("../style/style_authorization.qss", "r") as f:
+            self.setStyleSheet(f.read())
+
     def clicked_back_button(self):
         self.hide()
         self.auth_window.show()

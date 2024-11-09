@@ -14,10 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel {
-    color: green;
-    text-align: center;
-}</string>
+   <string notr="true"/>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -26,8 +23,8 @@
    <widget class="QLabel" name="label_authorization">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>10</y>
+      <x>360</x>
+      <y>20</y>
       <width>301</width>
       <height>141</height>
      </rect>
@@ -62,7 +59,7 @@
       <x>260</x>
       <y>200</y>
       <width>301</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -72,7 +69,7 @@
       <x>260</x>
       <y>280</y>
       <width>301</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -106,14 +103,13 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>340</y>
-      <width>111</width>
-      <height>41</height>
+      <y>360</y>
+      <width>121</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Войти</string>
@@ -124,12 +120,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>91</width>
-      <height>41</height>
+      <width>131</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>назад</string>
@@ -138,11 +134,14 @@
    <widget class="QLabel" name="error">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>310</y>
+      <x>250</x>
+      <y>330</y>
       <width>301</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: green;</string>
     </property>
     <property name="text">
      <string/>

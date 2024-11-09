@@ -1,36 +1,39 @@
-QWidget {
-    background-color: #202123;
-    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #202123, stop:1 #3A3B3C);
-}
 QPushButton {
-    border-radius: 10px;
+    background-color: #4CAF50;
     color: white;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    background: #9ACD32; 
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border: none; 
+    border-radius: 20px; 
+    font-size: 18px; 
+    font-weight: 600; 
+    padding: 15px 30px; 
+    text-align: center; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); 
+    transition: all 0.2s ease; 
 }
 
-QPushButton:hover {
-    background: #8FBC30; 
-    box-shadow: 0 0 10px 2px #9ACD32, 0 0 10px 4px #8FBC30;
-    transform: scale(1.05); 
+QPushButton:hover { 
+    background-color: #3e8e41; 
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px); 
 }
 
-QPushButton:pressed {
-    background-color: #7DA527; 
-    transform: scale(0.95); 
-    box-shadow: 0 0 5px 1px #7DA527; 
+QPushButton:pressed { 
+    background-color: #367c39;  /* Добавлен ";" */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); 
+    transform: translateY(2px);
 }
-QLabel {
-    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #3A3B3C, stop:1 #202123); 
-    color: #E1E1E1;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #444; 
-    font-weight: bold;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    text-align: center;
+
+QTextEdit {
+    background-color: #fff; 
+    border: 1px solid #ccc; 
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+    font-size: 14px; 
+    padding: 10px; 
+    color: #333; 
+}
+
+QTextEdit:focus {
+    outline: none; 
+    border: 2px solid #4CAF50; 
+    background-color: #f0f0f0; 
 }
