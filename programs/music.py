@@ -16,7 +16,6 @@ class MusicPlayer(QMainWindow):
         self.audio_output = QAudioOutput()
         self.player.setAudioOutput(self.audio_output)
         self.file_name = None
-        self.player.setSource(QUrl.fromLocalFile(self.file_name))
         self.audio_output.setVolume(.5)
         self.player.play()
         self.dialog_button.clicked.connect(self.clicked_dialog_button)
@@ -35,15 +34,21 @@ class MusicPlayer(QMainWindow):
             self.play_or_stop = True
 
     def clicked_dialog_button(self):
-        self.file_name = QFileDialog.getOpenFileName(self, "Открыть файл", "", "Аудио файлы (*.mp3 *.wav *.ogg)")
+        self.file_name, _ = QFileDialog.getOpenFileName(self, "Открыть файл", "", "Аудио файлы (*.mp3 *.wav *.ogg)")
+        self.player.setSource(QUrl.fromLocalFile(self.file_name))
 
     def set_volume(self):
         self.volume = self.volume_slider.value()
         self.audio_output.setVolume(self.volume * .01)
 
 
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
+
+
 if __name__ == '__main__':
     app = QApplication([])
+    sys.excepthook = except_hook
     main_window = MusicPlayer()
     main_window.show()
     sys.exit(app.exec())
