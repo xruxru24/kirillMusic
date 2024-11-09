@@ -1,12 +1,12 @@
 QWidget {
-    background-color: #202123; /* Базовый темный цвет */
-    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #202123, stop:1 #3A3B3C); /* Плавный градиент из темного в более светлый серый */
+    background-color: #202123;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #202123, stop:1 #3A3B3C);
 }
 QPushButton {
     border-radius: 10px;
     color: white;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    background: #9ACD32; /* Натуральный салатовый цвет */
+    background: #9ACD32; 
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -14,23 +14,23 @@ QPushButton {
 }
 
 QPushButton:hover {
-    background: #8FBC30; /* Чуть темнее при наведении */
-    box-shadow: 0 0 10px 2px #9ACD32, 0 0 10px 4px #8FBC30; /* Подсветка */
-    transform: scale(1.05); /* Небольшое увеличение */
+    background: #8FBC30; 
+    box-shadow: 0 0 10px 2px #9ACD32, 0 0 10px 4px #8FBC30;
+    transform: scale(1.05); 
 }
 
 QPushButton:pressed {
-    background-color: #7DA527; /* Темный оттенок при нажатии */
-    transform: scale(0.95); /* Легкое уменьшение при нажатии */
-    box-shadow: 0 0 5px 1px #7DA527; /* Уменьшенная тень */
+    background-color: #7DA527; 
+    transform: scale(0.95); 
+    box-shadow: 0 0 5px 1px #7DA527; 
 }
 QLabel {
-    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #3A3B3C, stop:1 #202123); /* Темный градиент */
-    color: #E1E1E1; /* Светлый текст */
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #3A3B3C, stop:1 #202123); 
+    color: #E1E1E1;
     padding: 10px;
-    border-radius: 8px; /* Закругленные края */
-    border: 1px solid #444; /* Тонкая обводка */
+    border-radius: 8px;
+    border: 1px solid #444; 
     font-weight: bold;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тень для объема */
-    text-align: center; /* Выравнивание текста */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
