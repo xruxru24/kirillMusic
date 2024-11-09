@@ -4,17 +4,16 @@ import sqlite3
 
 
 class Login(QMainWindow):
-    def __init__(self):
+    def __init__(self, auth_window):
         super().__init__()
         uic.loadUi('../ui/login.ui', self)
         self.back_button.clicked.connect(self.clicked_back_button)
         self.login_button.clicked.connect(self.clicked_login_button)
+        self.auth_window = auth_window
 
     def clicked_back_button(self):
-        from authorization import Authorization
         self.hide()
-        self.auth_show = Authorization()
-        self.auth_show.show()
+        self.auth_window.show()
         self.close()
 
     def clicked_login_button(self):
