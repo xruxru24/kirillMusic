@@ -1,11 +1,25 @@
 import sys
-from PySide6.QtCore import QUrl, QTimer
+import os
+from PySide6.QtCore import QUrl, QTimer, Qt, QAbstractListModel, QModelIndex
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PySide6.QtWidgets import QApplication, QFileDialog
+from PySide6.QtWidgets import QApplication, QListView, QVBoxLayout, QFileDialog
 from PySide6.QtUiTools import loadUiType
 
-
 Ui_MainWindow, QMainWindow = loadUiType('../ui/player.ui')
+
+
+class TrackModel(QAbstractListModel):
+    def __init__(self, tracks, parent=None):
+        super().__init__(parent)
+        self._tracks = tracks
+
+    def rowCount(self, index=QModelIndex()):
+        return len(self._tracks)
+
+    def data(self, index, role):
+        if role == Qt.DisplayRole:
+            return self._tracks[index.row()]
+        return None
 
 
 class MusicPlayer(QMainWindow, Ui_MainWindow):
@@ -33,21 +47,33 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_position)
         self.timer.start(1000)
+        self.append_playlist_button.clicked.connect(self.load_tracks_from_folder)
+        self.tracks = []
+        self.track_list = QListView()
+        self.track_list.clicked.connect(self.play_track_from_list)
+        layout = QVBoxLayout(self.playlist_widget)
+        layout.addWidget(self.track_list)
+        self.playlist_widget.setVisible(False)
+        self.listen_count = 0
+        self.track_plays = {}
+        self.half_duration = 0
+        self.track_playing = False  # флаг для отслеживания воспроизведения
 
     def clicked_stop_play_button(self):
         if self.play_or_stop:
             self.player.pause()
             self.play_or_stop = False
-            self.stop_play_button.setText('плей')
+            self.stop_play_button.setText('Воспроизвести')
         else:
             self.player.play()
             self.play_or_stop = True
-            self.stop_play_button.setText('стоп')
+            self.stop_play_button.setText('Пауза')
 
     def clicked_dialog_button(self):
         self.file_name, _ = QFileDialog.getOpenFileName(self, "Открыть файл", "", "Аудио файлы (*.mp3 *.wav *.ogg)")
-        self.player.setSource(QUrl.fromLocalFile(self.file_name))
-        self.player.play()
+        if self.file_name:
+            self.player.setSource(QUrl.fromLocalFile(self.file_name))
+            self.player.play()
 
     def set_volume(self):
         self.volume = self.volume_slider.value()
@@ -64,6 +90,51 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
 
     def update_position(self):
         self.progress_slider.setValue(self.player.position())
+
+    def load_tracks_from_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, "Выберите папку с треками")
+        if folder_path:
+            self.tracks = []
+            for filename in os.listdir(folder_path):
+                if filename.endswith(('.mp3', '.wav', '.ogg')):
+                    self.tracks.append(os.path.join(folder_path, filename))
+
+            model = TrackModel(self.tracks)
+            self.track_list.setModel(model)
+            self.playlist_widget.setVisible(True)
+
+    def play_track_from_list(self, index):
+        self.current_index = index
+        track_path = self.track_list.model()._tracks[index.row()]
+        track_name = os.path.basename(track_path)
+        self.player.setSource(QUrl.fromLocalFile(track_path))
+        self.player.play()
+        self.player.durationChanged.connect(self.duration_changed)
+        self.track_playing = False
+
+    def duration_changed(self, duration):
+        if duration > 0:
+            self.half_duration = duration // 2
+            self.player.positionChanged.connect(self.position_changed)
+
+    def position_changed(self, position):
+        if position >= self.half_duration and not self.track_playing:
+            track_path = self.track_list.model()._tracks[self.current_index.row()]
+            track_name = os.path.basename(track_path)
+            self.track_played(track_name)
+            self.track_playing = True
+
+    def track_played(self, track_name):
+        self.listen_count += 1
+        print(self.listen_count)
+
+        if track_name in self.track_plays:
+            self.track_plays[track_name] += 1
+        else:
+            self.track_plays[track_name] = 1
+
+        print(self.track_plays)
+        print(track_name)
 
 
 def except_hook(cls, exception, traceback):
