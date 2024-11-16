@@ -14,7 +14,6 @@ class Login(QMainWindow):
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
 
-
     def clicked_back_button(self):
         self.hide()
         self.auth_window.show()
@@ -24,7 +23,7 @@ class Login(QMainWindow):
         if self.text_login.toPlainText() and self.text_password.toPlainText():
             conn = sqlite3.connect("user.sqlite")
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE login = ? AND password = ?",
+            cursor.execute("SELECT *FROM users WHERE login = ? AND password = ?",
                            (self.text_login.toPlainText(), self.text_password.toPlainText()))
             result = cursor.fetchone()
             conn.close()
