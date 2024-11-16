@@ -25,7 +25,7 @@ class FunGame(QWidget):
             }
         """)
 
-    def paintEvent(self, event):
+    def paint_event(self, event):
         qp = QPainter()
         qp.begin(self)
         qp.setPen(QColor(0, 0, 0))
@@ -68,7 +68,7 @@ class FunGame(QWidget):
             })
         self.update()
 
-    def mousePressEvent(self, event):
+    def mouse_press_event(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             for i in range(len(self.figures)):
                 figure = self.figures[i]
