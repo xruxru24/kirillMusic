@@ -26,7 +26,7 @@ class Authorization(QMainWindow):
     def clicked_fun_game_button(self):
         self.fun_game_show.show()
 
-    def closeEvent(self, event):
+    def close_event(self, event):
         self.closed.emit()
         super().closeEvent(event)
 
