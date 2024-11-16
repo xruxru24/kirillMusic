@@ -22,12 +22,28 @@ class Register(QMainWindow):
     def clicked_register_button(self):
         if self.text_password.toPlainText() and self.text_password2.toPlainText() and self.text_login.toPlainText():
             if self.text_password.toPlainText() == self.text_password2.toPlainText():
-                conn = sqlite3.connect("user.sqlite")
-                cursor = conn.cursor()
-                cursor.execute("INSERT INTO users (login, password) VALUES (?, ?)",
-                               (self.text_login.toPlainText(), self.text_password.toPlainText()))
-                conn.commit()
-                conn.close()
+                if self.text_login.toPlainText() == 'users':
+                    self.error.setText('такой логин уже есть')
+                else:
+                    conn = sqlite3.connect("user.sqlite")
+                    cursor = conn.cursor()
+                    try:
+
+                        cursor.execute("INSERT INTO users (login, password) VALUES (?, ?)",
+                                           (self.text_login.toPlainText(), self.text_password.toPlainText()))
+                        self.error.setText('')
+                        cursor.execute(f'''CREATE TABLE {self.text_login.toPlainText()} (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            track_name TEXT,
+                            listening  INTEGER);''')
+                        conn.commit()
+                        conn.close()
+                    except sqlite3.IntegrityError:
+                        self.error.setText('такой логин уже есть')
+                        conn.close()
+                    except sqlite3.OperationalError:
+                        self.error.setText('ошибка формата')
+                        conn.close()
             else:
                 self.error.setText("пароли не совпадают")
         else:
