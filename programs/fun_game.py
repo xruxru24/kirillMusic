@@ -1,6 +1,6 @@
-from PyQt6.QtCore import QPointF, Qt, QRectF, QTimer
-from PyQt6.QtGui import QPainter, QColor, QPolygonF
-from PyQt6.QtWidgets import QWidget, QLabel
+from PySide6.QtCore import QPointF, Qt, QRectF, QTimer
+from PySide6.QtGui import QPainter, QColor, QPolygonF
+from PySide6.QtWidgets import QWidget, QLabel
 from random import randint
 
 
@@ -25,7 +25,7 @@ class FunGame(QWidget):
             }
         """)
 
-    def paint_event(self, event):
+    def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
         qp.setPen(QColor(0, 0, 0))
@@ -68,7 +68,7 @@ class FunGame(QWidget):
             })
         self.update()
 
-    def mouse_press_event(self, event):
+    def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             for i in range(len(self.figures)):
                 figure = self.figures[i]

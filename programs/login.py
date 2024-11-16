@@ -1,14 +1,20 @@
-from PyQt6 import uic
-from PyQt6.QtWidgets import QMainWindow
+from PySide6.QtCore import Signal
+from PySide6.QtUiTools import loadUiType
 import sqlite3
+from music import MusicPlayer
+
+Ui_MainWindow, QMainWindow = loadUiType('../ui/login.ui')
 
 
-class Login(QMainWindow):
+class Login(Ui_MainWindow, QMainWindow):
+    open = Signal()
+
     def __init__(self, auth_window):
         super().__init__()
-        uic.loadUi('../ui/login.ui', self)
+        self.setupUi(self)
         self.back_button.clicked.connect(self.clicked_back_button)
         self.login_button.clicked.connect(self.clicked_login_button)
+        self.music_player_show = MusicPlayer()
         self.auth_window = auth_window
 
         with open("../style/style_authorization.qss", "r") as f:
@@ -21,14 +27,16 @@ class Login(QMainWindow):
 
     def clicked_login_button(self):
         if self.text_login.toPlainText() and self.text_password.toPlainText():
-            conn = sqlite3.connect("user.sqlite")
+            conn = sqlite3.connect("users.sqlite")
             cursor = conn.cursor()
             cursor.execute("SELECT *FROM users WHERE login = ? AND password = ?",
                            (self.text_login.toPlainText(), self.text_password.toPlainText()))
             result = cursor.fetchone()
             conn.close()
             if result:
-                print(result)
+                self.hide()
+                self.music_player_show.show()
+                self.close()
             else:
                 self.error.setText("неверный логин или пароль")
         else:

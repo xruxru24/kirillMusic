@@ -1,12 +1,13 @@
-from PyQt6 import uic
-from PyQt6.QtWidgets import QMainWindow
+from PySide6.QtUiTools import loadUiType
 import sqlite3
 
+Ui_MainWindow, QMainWindow = loadUiType('../ui/register.ui')
 
-class Register(QMainWindow):
+
+class Register(Ui_MainWindow, QMainWindow):
     def __init__(self, auth_window):
         super().__init__()
-        uic.loadUi('../ui/register.ui', self)
+        self.setupUi(self)
         self.back_button.clicked.connect(self.clicked_back_button)
         self.register_button.clicked.connect(self.clicked_register_button)
         self.auth_window = auth_window
@@ -25,7 +26,7 @@ class Register(QMainWindow):
                 if self.text_login.toPlainText() == 'users':
                     self.error.setText('такой логин уже есть')
                 else:
-                    conn = sqlite3.connect("user.sqlite")
+                    conn = sqlite3.connect("users.sqlite")
                     cursor = conn.cursor()
                     try:
 

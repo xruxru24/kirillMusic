@@ -1,17 +1,18 @@
-from PyQt6 import uic
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QMainWindow
+from PySide6.QtCore import Signal
+from PySide6.QtUiTools import loadUiType
 from login import Login
 from register import Register
 from fun_game import FunGame
 
+Ui_MainWindow, QMainWindow = loadUiType('../ui/authorization.ui')
 
-class Authorization(QMainWindow):
-    closed = pyqtSignal()
+
+class Authorization(QMainWindow, Ui_MainWindow):
+    closed = Signal()
 
     def __init__(self):
         super().__init__()
-        uic.loadUi('../ui/authorization.ui', self)
+        self.setupUi(self)
         self.login.clicked.connect(self.clicked_login)
         self.registor.clicked.connect(self.clicked_register)
         self.fun_game_button.clicked.connect(self.clicked_fun_game_button)
