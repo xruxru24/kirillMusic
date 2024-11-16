@@ -4,7 +4,6 @@ from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtWidgets import QApplication, QFileDialog
 from PySide6.QtUiTools import loadUiType
 
-
 Ui_MainWindow, QMainWindow = loadUiType('../ui/player.ui')
 
 
