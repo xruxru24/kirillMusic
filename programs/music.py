@@ -59,6 +59,9 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
         self.half_duration = 0
         self.track_playing = False  # флаг для отслеживания воспроизведения
 
+        with open("../style/style_authorization.qss", "r") as f:
+            self.setStyleSheet(f.read())
+
     def clicked_stop_play_button(self):
         if self.play_or_stop:
             self.player.pause()
