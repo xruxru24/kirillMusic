@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>570</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>РЕГЕСТРАЦИЯ</string>
+     <string>РЕГИСТРАЦИЯ</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="text_login">
@@ -129,7 +129,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>ЗАРЕГЕСТРИРОВАТЬСЯ</string>
+     <string>ЗАРЕГИСТРИРОВАТЬСЯ</string>
     </property>
    </widget>
    <widget class="QLabel" name="error">

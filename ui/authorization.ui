@@ -46,7 +46,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>РЕГЕСТРАЦИЯ</string>
+     <string>РЕГИСТРАЦИЯ</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
