@@ -1,9 +1,11 @@
 import sys
 import os
-from PySide6.QtCore import QUrl, QTimer, Qt, QAbstractListModel, QModelIndex
+from PySide6.QtCore import QUrl, QTimer, Qt, QAbstractListModel, QModelIndex, Signal
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtWidgets import QApplication, QListView, QVBoxLayout, QFileDialog
 from PySide6.QtUiTools import loadUiType
+import sqlite3
+from top_user_list import TopUsers
 
 Ui_MainWindow, QMainWindow = loadUiType('../ui/player.ui')
 
@@ -23,7 +25,10 @@ class TrackModel(QAbstractListModel):
 
 
 class MusicPlayer(QMainWindow, Ui_MainWindow):
+    open = Signal()
+
     def __init__(self):
+        self.top_users_list_show = TopUsers()
         super().__init__()
         self.setupUi(self)
         self.play_or_stop = True
@@ -48,6 +53,7 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
         self.timer.timeout.connect(self.update_position)
         self.timer.start(1000)
         self.append_playlist_button.clicked.connect(self.load_tracks_from_folder)
+        self.top_user_button.clicked.connect(self.top_user_button_clicked)
         self.tracks = []
         self.track_list = QListView()
         self.track_list.clicked.connect(self.play_track_from_list)
@@ -61,6 +67,9 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
 
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
+
+    def top_user_button_clicked(self):
+        self.top_users_list_show.show()
 
     def clicked_stop_play_button(self):
         if self.play_or_stop:
@@ -109,7 +118,6 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
     def play_track_from_list(self, index):
         self.current_index = index
         track_path = self.track_list.model()._tracks[index.row()]
-        track_name = os.path.basename(track_path)
         self.player.setSource(QUrl.fromLocalFile(track_path))
         self.player.play()
         self.player.durationChanged.connect(self.duration_changed)
@@ -128,25 +136,22 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
             self.track_playing = True
 
     def track_played(self, track_name):
-        self.listen_count += 1
-        print(self.listen_count)
-
-        if track_name in self.track_plays:
-            self.track_plays[track_name] += 1
+        f = open('user_name.txt', 'r')
+        user = f.read()
+        f.close()
+        conn = sqlite3.connect('users.sqlite')
+        cur = conn.cursor()
+        cur.execute(f"SELECT listening FROM {user} WHERE track_name = ?", (track_name,))
+        row = cur.fetchone()
+        if row:
+            cur.execute(f"UPDATE {user} SET listening = listening + 1 WHERE track_name = ?", (track_name,))
         else:
-            self.track_plays[track_name] = 1
 
-        print(self.track_plays)
-        print(track_name)
+            cur.execute(f"INSERT INTO {user} (track_name, listening) VALUES (?, 1)", (track_name,))
+        conn.commit()
+        conn.close()
 
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
 
-
-if __name__ == "__main__":
-    app = QApplication([])
-    sys.excepthook = except_hook
-    main_window = MusicPlayer()
-    main_window.show()
-    sys.exit(app.exec())

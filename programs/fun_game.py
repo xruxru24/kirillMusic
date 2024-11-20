@@ -8,13 +8,16 @@ class FunGame(QWidget):
     def __init__(self):
         super().__init__()
         self.setGeometry(100, 100, 600, 600)
+        self.setFixedSize(600, 600)
         self.figures = []
         self.game_timer = QTimer()
         self.game_timer.timeout.connect(self.generate_figures)
         self.game_timer.start(3000)
-        self.score = 0
+        f = open('result_fun_game_txt', 'r')
+        self.score = int(f.read())
+        f.close()
         self.result = QLabel(str(self.score), self)
-        self.result.setGeometry(10, 10, 100, 10)
+        self.result.setGeometry(1, 10, 1000, 1000)
 
         self.setStyleSheet("""
             QWidget {
@@ -83,6 +86,9 @@ class FunGame(QWidget):
                         self.figures.pop(i)
                         self.score += 1
                         self.result.setText(str(self.score))
+                        f = open('result_fun_game_txt', 'w')
+                        f.write(f'{self.score + 1}')
+                        f.close()
                         self.update()
                         break
                 else:
@@ -91,6 +97,9 @@ class FunGame(QWidget):
                     if (event.pos().x() - x) ** 2 + (event.pos().y() - y) ** 2 <= rad ** 2:
                         self.figures.pop(i)
                         self.score += 1
+                        f = open('result_fun_game_txt', 'w')
+                        f.write(f'{self.score + 1}')
+                        f.close()
                         self.result.setText(str(self.score))
                         self.update()
                         break

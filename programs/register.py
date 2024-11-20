@@ -20,6 +20,7 @@ class Register(Ui_MainWindow, QMainWindow):
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
 
+
     def clicked_back_button(self):
         self.hide()
         self.auth_window.show()
@@ -44,6 +45,9 @@ class Register(Ui_MainWindow, QMainWindow):
                             listening  INTEGER);''')
                         conn.commit()
                         conn.close()
+                        f = open('user_name.txt', 'w')
+                        f.write(self.text_login.toPlainText())
+                        f.close()
                         self.hide()
                         self.music_player_show.show()
                         self.close()
@@ -57,3 +61,4 @@ class Register(Ui_MainWindow, QMainWindow):
                 self.error.setText("пароли не совпадают")
         else:
             self.error.setText("одна из строк пустая")
+

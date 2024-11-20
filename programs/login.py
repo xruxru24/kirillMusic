@@ -34,6 +34,9 @@ class Login(Ui_MainWindow, QMainWindow):
             result = cursor.fetchone()
             conn.close()
             if result:
+                f = open('user_name.txt', 'w')
+                f.write(self.text_login.toPlainText())
+                f.close()
                 self.hide()
                 self.music_player_show.show()
                 self.close()
