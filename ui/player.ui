@@ -30,7 +30,7 @@
       <item>
        <widget class="QPushButton" name="stop_play_button">
         <property name="text">
-         <string>Воспроизвести</string>
+         <string>пауза</string>
         </property>
        </widget>
       </item>
@@ -45,6 +45,13 @@
        <widget class="QPushButton" name="append_playlist_button">
         <property name="text">
          <string>Добавить папку</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>топ</string>
         </property>
        </widget>
       </item>
@@ -78,7 +85,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
