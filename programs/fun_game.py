@@ -15,7 +15,7 @@ class FunGame(QWidget):
         self.game_timer.start(3000)
         self.score = 0
         self.result = QLabel(str(self.score), self)
-        self.result.setGeometry(10, 10, 100, 10)
+        self.result.setGeometry(1, 10, 1000, 1000)
 
         self.setStyleSheet("""
             QWidget {
