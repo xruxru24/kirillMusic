@@ -8,6 +8,7 @@ class FunGame(QWidget):
     def __init__(self):
         super().__init__()
         self.setGeometry(100, 100, 600, 600)
+        self.setFixedSize(600, 600)
         self.figures = []
         self.game_timer = QTimer()
         self.game_timer.timeout.connect(self.generate_figures)
