@@ -1,16 +1,21 @@
+from PySide6.QtCore import Signal
 from PySide6.QtUiTools import loadUiType
 import sqlite3
+from music import MusicPlayer
 
 Ui_MainWindow, QMainWindow = loadUiType('../ui/register.ui')
 
 
 class Register(Ui_MainWindow, QMainWindow):
+    open = Signal()
+
     def __init__(self, auth_window):
         super().__init__()
         self.setupUi(self)
         self.back_button.clicked.connect(self.clicked_back_button)
         self.register_button.clicked.connect(self.clicked_register_button)
         self.auth_window = auth_window
+        self.music_player_show = MusicPlayer()
 
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
@@ -39,6 +44,9 @@ class Register(Ui_MainWindow, QMainWindow):
                             listening  INTEGER);''')
                         conn.commit()
                         conn.close()
+                        self.hide()
+                        self.music_player_show.show()
+                        self.close()
                     except sqlite3.IntegrityError:
                         self.error.setText('такой логин уже есть')
                         conn.close()
