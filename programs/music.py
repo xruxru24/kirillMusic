@@ -2,7 +2,7 @@ import sys
 import os
 from PySide6.QtCore import QUrl, QTimer, Qt, QAbstractListModel, QModelIndex, Signal
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PySide6.QtWidgets import QApplication, QListView, QVBoxLayout, QFileDialog
+from PySide6.QtWidgets import QListView, QVBoxLayout, QFileDialog
 from PySide6.QtUiTools import loadUiType
 import sqlite3
 from top_user_list import TopUsers
@@ -154,4 +154,3 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
-
