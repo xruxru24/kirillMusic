@@ -11,6 +11,7 @@ class Register(Ui_MainWindow, QMainWindow):
 
     def __init__(self, auth_window):
         super().__init__()
+        self.setWindowTitle("Регистрация")
         self.setupUi(self)
         self.back_button.clicked.connect(self.clicked_back_button)
         self.register_button.clicked.connect(self.clicked_register_button)
@@ -19,7 +20,6 @@ class Register(Ui_MainWindow, QMainWindow):
 
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
-
 
     def clicked_back_button(self):
         self.hide()
@@ -61,4 +61,3 @@ class Register(Ui_MainWindow, QMainWindow):
                 self.error.setText("пароли не совпадают")
         else:
             self.error.setText("одна из строк пустая")
-

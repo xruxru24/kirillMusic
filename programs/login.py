@@ -12,6 +12,7 @@ class Login(Ui_MainWindow, QMainWindow):
     def __init__(self, auth_window):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle("Вход")
         self.back_button.clicked.connect(self.clicked_back_button)
         self.login_button.clicked.connect(self.clicked_login_button)
         self.music_player_show = MusicPlayer()

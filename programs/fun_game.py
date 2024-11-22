@@ -11,6 +11,7 @@ class FunGame(QWidget):
         self.setFixedSize(600, 600)
         self.figures = []
         self.game_timer = QTimer()
+        self.setWindowTitle("Игра")
         self.game_timer.timeout.connect(self.generate_figures)
         self.game_timer.start(3000)
         f = open('result_fun_game_txt', 'r')

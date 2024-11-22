@@ -1,4 +1,3 @@
-import sys
 import os
 from PySide6.QtCore import QUrl, QTimer, Qt, QAbstractListModel, QModelIndex, Signal
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
@@ -86,6 +85,8 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
         if self.file_name:
             self.player.setSource(QUrl.fromLocalFile(self.file_name))
             self.player.play()
+            self.add_track_to_db(self.file_name)
+            self.track_played(self.file_name)
 
     def set_volume(self):
         self.volume = self.volume_slider.value()
@@ -109,48 +110,46 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
             self.tracks = []
             for filename in os.listdir(folder_path):
                 if filename.endswith(('.mp3', '.wav', '.ogg')):
-                    self.tracks.append(os.path.join(folder_path, filename))
+                    track_path = os.path.join(folder_path, filename)
+                    self.tracks.append(track_path)
+                    self.add_track_to_db(track_path)
 
             model = TrackModel(self.tracks)
             self.track_list.setModel(model)
             self.playlist_widget.setVisible(True)
+
+    def add_track_to_db(self, track_path):
+        track_name = os.path.basename(track_path)
+        f = open('user_name.txt', 'r')
+        user = f.read()
+        f.close()
+        conn = sqlite3.connect('users.sqlite')
+        cur = conn.cursor()
+
+        cur.execute(f"SELECT track_name FROM {user} WHERE track_name = ?", (track_name,))
+        existing_track = cur.fetchone()
+
+        if existing_track is None:
+            cur.execute(f"INSERT INTO {user} (track_name, listening) VALUES (?, 0)", (track_name,))
+            conn.commit()
+
+        conn.close()
 
     def play_track_from_list(self, index):
         self.current_index = index
         track_path = self.track_list.model()._tracks[index.row()]
         self.player.setSource(QUrl.fromLocalFile(track_path))
         self.player.play()
-        self.player.durationChanged.connect(self.duration_changed)
         self.track_playing = False
+        self.track_played(track_path)
 
-    def duration_changed(self, duration):
-        if duration > 0:
-            self.half_duration = duration // 2
-            self.player.positionChanged.connect(self.position_changed)
-
-    def position_changed(self, position):
-        if position >= self.half_duration and not self.track_playing:
-            track_path = self.track_list.model()._tracks[self.current_index.row()]
-            track_name = os.path.basename(track_path)
-            self.track_played(track_name)
-            self.track_playing = True
-
-    def track_played(self, track_name):
+    def track_played(self, track_path):
+        track_name = os.path.basename(track_path)
         f = open('user_name.txt', 'r')
         user = f.read()
         f.close()
         conn = sqlite3.connect('users.sqlite')
         cur = conn.cursor()
-        cur.execute(f"SELECT listening FROM {user} WHERE track_name = ?", (track_name,))
-        row = cur.fetchone()
-        if row:
-            cur.execute(f"UPDATE {user} SET listening = listening + 1 WHERE track_name = ?", (track_name,))
-        else:
-
-            cur.execute(f"INSERT INTO {user} (track_name, listening) VALUES (?, 1)", (track_name,))
+        cur.execute(f"UPDATE {user} SET listening = listening + 1 WHERE track_name = ?", (track_name,))
         conn.commit()
         conn.close()
-
-
-def except_hook(cls, exception, traceback):
-    sys.__excepthook__(cls, exception, traceback)
