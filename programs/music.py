@@ -24,8 +24,7 @@ class TrackModel(QAbstractListModel):
 class MusicPlayer(QMainWindow, Ui_MainWindow):
     open = Signal()
 
-    def __init__(self):
-        self.top_users_list_show = TopUsers()
+    def __init__(self, username):
         super().__init__()
         self.setupUi(self)
         self.play_or_stop = True
@@ -52,6 +51,7 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
         self.append_playlist_button.clicked.connect(self.load_tracks_from_folder)
         self.top_user_button.clicked.connect(self.top_user_button_clicked)
         self.tracks = []
+        self.username = username
         self.track_list = QListView()
         self.track_list.clicked.connect(self.play_track_from_list)
         layout = QVBoxLayout(self.playlist_widget)
@@ -66,6 +66,7 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
             self.setStyleSheet(f.read())
 
     def top_user_button_clicked(self):
+        self.top_users_list_show = TopUsers(self.username)
         self.top_users_list_show.show()
 
     def clicked_stop_play_button(self):
@@ -118,19 +119,15 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
 
     def add_track_to_db(self, track_path):
         track_name = os.path.basename(track_path)
-        f = open('user_name.txt', 'r')
-        user = f.read()
-        f.close()
         conn = sqlite3.connect('users.sqlite')
         cur = conn.cursor()
 
-        cur.execute(f"SELECT track_name FROM {user} WHERE track_name = ?", (track_name,))
+        cur.execute(f"SELECT track_name FROM {self.username} WHERE track_name = ?", (track_name,))
         existing_track = cur.fetchone()
 
         if existing_track is None:
-            cur.execute(f"INSERT INTO {user} (track_name, listening) VALUES (?, 0)", (track_name,))
+            cur.execute(f"INSERT INTO {self.username} (track_name, listening) VALUES (?, 0)", (track_name,))
             conn.commit()
-
         conn.close()
 
     def play_track_from_list(self, index):
@@ -143,11 +140,7 @@ class MusicPlayer(QMainWindow, Ui_MainWindow):
 
     def track_played(self, track_path):
         track_name = os.path.basename(track_path)
-        f = open('user_name.txt', 'r')
-        user = f.read()
-        f.close()
-        conn = sqlite3.connect('users.sqlite')
-        cur = conn.cursor()
-        cur.execute(f"UPDATE {user} SET listening = listening + 1 WHERE track_name = ?", (track_name,))
-        conn.commit()
-        conn.close()
+        with sqlite3.connect('users.sqlite') as conn:
+            cur = conn.cursor()
+            cur.execute(f"UPDATE {self.username} SET listening = listening + 1 WHERE track_name = ?", (track_name,))
+            conn.commit()

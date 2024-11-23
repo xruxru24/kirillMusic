@@ -15,7 +15,6 @@ class Register(QMainWindow, Ui_MainWindow):
         self.back_button.clicked.connect(self.clicked_back_button)
         self.register_button.clicked.connect(self.clicked_register_button)
         self.auth_window = auth_window
-        self.music_player_show = MusicPlayer()
 
         with open("../style/style_authorization.qss", "r") as f:
             self.setStyleSheet(f.read())
@@ -47,6 +46,8 @@ class Register(QMainWindow, Ui_MainWindow):
                         f = open('user_name.txt', 'w')
                         f.write(self.text_login.toPlainText())
                         f.close()
+                        username = self.text_login.toPlainText()
+                        self.music_player_show = MusicPlayer(username)
                         self.hide()
                         self.music_player_show.show()
                         self.close()

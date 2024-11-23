@@ -14,7 +14,6 @@ class Login(QMainWindow, Ui_MainWindow):
         self.setWindowTitle("Вход")
         self.back_button.clicked.connect(self.clicked_back_button)
         self.login_button.clicked.connect(self.clicked_login_button)
-        self.music_player_show = MusicPlayer()
         self.auth_window = auth_window
 
         with open("../style/style_authorization.qss", "r") as f:
@@ -34,9 +33,8 @@ class Login(QMainWindow, Ui_MainWindow):
             result = cursor.fetchone()
             conn.close()
             if result:
-                f = open('user_name.txt', 'w')
-                f.write(self.text_login.toPlainText())
-                f.close()
+                username = self.text_login.toPlainText()
+                self.music_player_show = MusicPlayer(username)
                 self.hide()
                 self.music_player_show.show()
                 self.close()

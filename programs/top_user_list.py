@@ -28,30 +28,27 @@ class SimpleTableModel(QAbstractTableModel):
 
 
 class TopUsers(QMainWindow):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
         self.setWindowTitle("Таблица треков")
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_table)
         self.timer.start(3000)
-        self.update_table()
+        self.update_table(username)
 
-    def update_table(self):
-        f = open("user_name.txt", "r")
-        table_name = f.read()
-        conn = sqlite3.connect("users.sqlite")
-        cursor = conn.cursor()
-        query = f"SELECT * FROM {table_name}"
-        cursor.execute(query)
-        data = cursor.fetchall()
-        header = [description[0] for description in cursor.description]
-        conn.close()
-        model = SimpleTableModel(data, header)
-        view = self.findChild(QTableView)
-        if view is None:
-            view = QTableView()
-            central_widget = QWidget()
-            layout = QVBoxLayout(central_widget)
-            layout.addWidget(view)
-            self.setCentralWidget(central_widget)
-        view.setModel(model)
+    def update_table(self, username):
+        with sqlite3.connect("users.sqlite") as conn:
+            cursor = conn.cursor()
+            query = f"SELECT * FROM {username}"
+            cursor.execute(query)
+            data = cursor.fetchall()
+            header = [description[0] for description in cursor.description]
+            model = SimpleTableModel(data, header)
+            view = self.findChild(QTableView)
+            if view is None:
+                view = QTableView()
+                central_widget = QWidget()
+                layout = QVBoxLayout(central_widget)
+                layout.addWidget(view)
+                self.setCentralWidget(central_widget)
+            view.setModel(model)
