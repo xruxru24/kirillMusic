@@ -1,12 +1,11 @@
+from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Signal
-from PySide6.QtUiTools import loadUiType
 import sqlite3
 from music import MusicPlayer
+from registerUI import Ui_MainWindow
 
-Ui_MainWindow, QMainWindow = loadUiType('../ui/register.ui')
 
-
-class Register(Ui_MainWindow, QMainWindow):
+class Register(QMainWindow, Ui_MainWindow):
     open = Signal()
 
     def __init__(self, auth_window):

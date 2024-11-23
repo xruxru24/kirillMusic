@@ -1,10 +1,9 @@
 from PySide6.QtCore import Signal
-from PySide6.QtUiTools import loadUiType
+from PySide6.QtWidgets import QMainWindow
 from login import Login
 from register import Register
 from fun_game import FunGame
-
-Ui_MainWindow, QMainWindow = loadUiType('../ui/authorization.ui')
+from authorizationUI import Ui_MainWindow
 
 
 class Authorization(QMainWindow, Ui_MainWindow):

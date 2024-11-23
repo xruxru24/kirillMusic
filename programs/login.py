@@ -1,12 +1,11 @@
 from PySide6.QtCore import Signal
-from PySide6.QtUiTools import loadUiType
 import sqlite3
+from PySide6.QtWidgets import QMainWindow
 from music import MusicPlayer
+from loginUI import Ui_MainWindow
 
-Ui_MainWindow, QMainWindow = loadUiType('../ui/login.ui')
 
-
-class Login(Ui_MainWindow, QMainWindow):
+class Login(QMainWindow, Ui_MainWindow):
     open = Signal()
 
     def __init__(self, auth_window):

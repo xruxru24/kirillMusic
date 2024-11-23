@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['playerMusic\\programs\\main.py'],
+    ['programs\\main.py'],
     pathex=[],
     binaries=[],
     datas=[],
